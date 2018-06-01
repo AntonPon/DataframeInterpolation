@@ -4,9 +4,10 @@ import PIL.Image as Image
 import pickle
 import numpy as np
 
+
 def get_triple(path_n, image_names, start, end):
     result = list()
-    for i in range(start, end + 1, 1):
+    for i in range(start, end, 1):
         image = Image.open('{}/{}'.format(path_n, image_names[i]))
         result.append(np.array(image))
     return np.array(result)
@@ -22,7 +23,11 @@ if __name__ == '__main__':
 
     for i in tqdm(range(0, len(image_name)-3, 3)):
         example = get_triple(image_path, image_name, i, i+3)
-        with open('dataset/batch_{}_len_{}_.pkl'.format(len(dataset), start), 'wb') as handle:
-            pickle.dump(dataset, handle, protocol=pickle.HIGHEST_PROTOCOL)
+        with open('../dataset/batch_{}_len_{}_.pkl'.format(len(example), start), 'wb') as handle:
+            pickle.dump(example, handle, protocol=pickle.HIGHEST_PROTOCOL)
             start += 1
     #pickle.dump('dataset.pkl')
+
+
+    with open('dataset/batch_0_len_1_.pkl', 'rb') as f:
+        print(pickle.load(f))
